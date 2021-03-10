@@ -79,4 +79,7 @@ while True: #무한반복
     continue
 
 capture.release()
+<<<<<<< HEAD
 zzzz
+=======
+>>>>>>> parent of df7bd5f (one)
