@@ -13,7 +13,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import java.util.ArrayList;
-
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -66,11 +67,18 @@ public class MainActivity extends AppCompatActivity {
                 int a = Integer.valueOf(progress);
                 if (a >= 75) {
                     image.setImageResource(R.drawable.burn);
-                    list.add(new Integer(seekbar.getProgress()));
-                    list.add(new Integer(seekbar2.getProgress()));
-                    list.add(new Integer(seekbar3.getProgress()));
-                    list.add(new Integer(seekbar4.getProgress()));
-                    alter(list,"종이");
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            list.add(0,new Integer(seekbar.getProgress()));
+                            list.add(1,new Integer(seekbar2.getProgress()));
+                            list.add(2,new Integer(seekbar3.getProgress()));
+                            list.add(3,new Integer(seekbar4.getProgress()));
+                            alter(list,"종이");
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.scheduleAtFixedRate(task,0,1000);
                 }else if(a>=50) {
                     image.setImageResource(R.drawable.happy);
                 }
@@ -92,11 +100,18 @@ public class MainActivity extends AppCompatActivity {
                 int a = Integer.valueOf(progress);
                 if (a >= 75) {
                     image2.setImageResource(R.drawable.burn);
-                    list.add(new Integer(seekbar.getProgress()));
-                    list.add(new Integer(seekbar2.getProgress()));
-                    list.add(new Integer(seekbar3.getProgress()));
-                    list.add(new Integer(seekbar4.getProgress()));
-                    alter(list,"플라스틱");
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            list.add(0,new Integer(seekbar.getProgress()));
+                            list.add(1,new Integer(seekbar2.getProgress()));
+                            list.add(2,new Integer(seekbar3.getProgress()));
+                            list.add(3,new Integer(seekbar4.getProgress()));
+                            alter(list,"플라스틱");
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.scheduleAtFixedRate(task,0,1000);
                 }else if(a>=50) {
                     image2.setImageResource(R.drawable.happy);
                 }
@@ -118,11 +133,19 @@ public class MainActivity extends AppCompatActivity {
                 int a = Integer.valueOf(progress);
                 if (a >= 75) {
                     image3.setImageResource(R.drawable.burn);
-                    list.add(new Integer(seekbar.getProgress()));
-                    list.add(new Integer(seekbar2.getProgress()));
-                    list.add(new Integer(seekbar3.getProgress()));
-                    list.add(new Integer(seekbar4.getProgress()));
-                    alter(list,"캔");
+
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            list.add(0,new Integer(seekbar.getProgress()));
+                            list.add(1,new Integer(seekbar2.getProgress()));
+                            list.add(2,new Integer(seekbar3.getProgress()));
+                            list.add(3,new Integer(seekbar4.getProgress()));
+                            alter(list,"캔");
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.scheduleAtFixedRate(task,0,1000);
                 }else if(a>=50) {
                     image3.setImageResource(R.drawable.happy);
                 }
@@ -144,11 +167,18 @@ public class MainActivity extends AppCompatActivity {
                 int a = Integer.valueOf(progress);
                 if (a >= 75) {
                     image4.setImageResource(R.drawable.burn);
-                    list.add(new Integer(seekbar.getProgress()));
-                    list.add(new Integer(seekbar2.getProgress()));
-                    list.add(new Integer(seekbar3.getProgress()));
-                    list.add(new Integer(seekbar4.getProgress()));
-                    alter(list,"일반");
+                    TimerTask task = new TimerTask() {
+                        @Override
+                        public void run() {
+                            list.add(0,new Integer(seekbar.getProgress()));
+                            list.add(1,new Integer(seekbar2.getProgress()));
+                            list.add(2,new Integer(seekbar3.getProgress()));
+                            list.add(3,new Integer(seekbar4.getProgress()));
+                            alter(list,"일반");
+                        }
+                    };
+                    Timer timer = new Timer();
+                    timer.scheduleAtFixedRate(task,0,1000);
                 }else if(a>=50) {
                     image4.setImageResource(R.drawable.happy);
                 }
