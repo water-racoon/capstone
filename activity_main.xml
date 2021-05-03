@@ -12,7 +12,7 @@
         android:layout_height="117dp"
         android:layout_marginTop="52dp"
         android:layout_marginEnd="44dp"
-        android:src="@drawable/main"
+        android:src="@drawable/can_empty"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.926"
@@ -27,7 +27,7 @@
         android:layout_marginTop="48dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/main" />
+        app:srcCompat="@drawable/pla_empty" />
 
     <ImageView
         android:id="@+id/target3"
@@ -37,7 +37,7 @@
         android:layout_marginTop="56dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/target"
-        app:srcCompat="@drawable/main" />
+        app:srcCompat="@drawable/pa_empty" />
 
     <ImageView
         android:id="@+id/target4"
@@ -49,7 +49,7 @@
         app:layout_constraintHorizontal_bias="0.926"
         app:layout_constraintStart_toEndOf="@+id/target3"
         app:layout_constraintTop_toBottomOf="@+id/target2"
-        app:srcCompat="@drawable/main" />
+        app:srcCompat="@drawable/tra_empty" />
 
     <SeekBar
         android:id="@+id/changer"
