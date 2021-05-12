@@ -1,238 +1,131 @@
-package com.example.bulid;
+package com.example.test;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.NotificationCompat;
+        import android.os.Handler;
+        import android.os.Bundle;
+        import android.util.Log;
+        import android.view.View;
+        import android.widget.Button;
+        import android.widget.EditText;
+        import android.widget.TextView;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Intent;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.SeekBar;
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
+        import java.io.BufferedReader;
+        import java.io.BufferedWriter;
+        import java.io.DataInputStream;
+        import java.io.DataOutputStream;
+        import java.io.FileOutputStream;
+        import java.io.IOException;
+        import java.io.InputStreamReader;
+        import java.io.OutputStream;
+        import java.io.OutputStreamWriter;
+        import java.io.PrintWriter;
+        import java.net.Socket;
 
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-public class MainActivity extends AppCompatActivity {
-    NotificationManager man;
-    NotificationCompat.Builder bui;
-    private static String CHANNEL_ID = "cha";
-    private static String CHANEL_NAME = "Cha";
+    Button connect_btn;                 // ip 받아오는 버튼
+
+    EditText ip_edit;               // ip 에디트
+    TextView show_text;             // 서버에서온거 보여주는 에디트
+    // 소켓통신에 필요한것
+    private String html = "";
+    private Handler mHandler;
+
+    private Socket socket;
+
+    private BufferedReader networkReader;
+    private PrintWriter networkWriter;
+
+    private DataOutputStream dos;
+    private DataInputStream dis;
+
+    private String ip = "192.168.43.95";            // IP 번호
+    private int port = 8081;                          // port 번호
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // ImageView와 seekBar 객체 선언
-        ImageView image = (ImageView) findViewById(R.id.target);
-        ImageView image2 = (ImageView) findViewById(R.id.target2);
-        ImageView image3 = (ImageView) findViewById(R.id.target3);
-        ImageView image4 = (ImageView) findViewById(R.id.target4);
-        SeekBar seekbar = (SeekBar) findViewById(R.id.changer);
-        SeekBar seekbar2 = (SeekBar) findViewById(R.id.changer2);
-        SeekBar seekbar3 = (SeekBar) findViewById(R.id.changer3);
-        SeekBar seekbar4 = (SeekBar) findViewById(R.id.changer4);
-        // Intent에 값을 보낼 리스트배열 list 선언
-        ArrayList<Integer> list = new ArrayList<Integer>();
-        // Intent값 받아오기
-        Intent intent = getIntent();
-        // 리스트배열 name에 받아온 Intent값 집어넣기
-        ArrayList<Integer> name = (ArrayList<Integer>) intent.getSerializableExtra("name");
 
-        if(name!=null){
-            //name값이 있다면 seekbar값 셋팅 및 seekbar값에 맞춘 이미지셋팅
-            seekbar.setProgress(name.get(0));
-            seekbar2.setProgress(name.get(1));
-            seekbar3.setProgress(name.get(2));
-            seekbar4.setProgress(name.get(3));
-            changeimage(name.get(0),image);
-            changeimage(name.get(1),image2);
-            changeimage(name.get(2),image3);
-            changeimage(name.get(3),image4);
-            list.clear();
-        }
-        // seekbar각 객체에 따른 이벤트리스너 셋팅 조건은 seekBar의 값을 기준으로 25씩 사진변경, 75이상시 알림
-        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar){}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar){}
+        connect_btn = (Button)findViewById(R.id.connect_btn);
+        connect_btn.setOnClickListener(this);
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int a = Integer.valueOf(progress);
-                if (a >= 75) {
-                    image.setImageResource(R.drawable.burn);
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            list.add(0,new Integer(seekbar.getProgress()));
-                            list.add(1,new Integer(seekbar2.getProgress()));
-                            list.add(2,new Integer(seekbar3.getProgress()));
-                            list.add(3,new Integer(seekbar4.getProgress()));
-                            alter(list,"종이");
-                        }
-                    };
-                    Timer timer = new Timer();
-                    timer.scheduleAtFixedRate(task,0,1000);
-                }else if(a>=50) {
-                    image.setImageResource(R.drawable.happy);
-                }
-                 else if(a>=25){
-                     image.setImageResource(R.drawable.change);
-                    } else {
-                    image.setImageResource(R.drawable.main);
-                }
-            }
-        });
-        seekbar2.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar){}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar){}
+        ip_edit = (EditText)findViewById(R.id.ip_edit);
+        show_text = (TextView)findViewById(R.id.show_text);
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int a = Integer.valueOf(progress);
-                if (a >= 75) {
-                    image2.setImageResource(R.drawable.burn);
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            list.add(0,new Integer(seekbar.getProgress()));
-                            list.add(1,new Integer(seekbar2.getProgress()));
-                            list.add(2,new Integer(seekbar3.getProgress()));
-                            list.add(3,new Integer(seekbar4.getProgress()));
-                            alter(list,"플라스틱");
-                        }
-                    };
-                    Timer timer = new Timer();
-                    timer.scheduleAtFixedRate(task,0,1000);
-                }else if(a>=50) {
-                    image2.setImageResource(R.drawable.happy);
-                }
-                else if(a>=25){
-                    image2.setImageResource(R.drawable.change);
-                } else {
-                    image2.setImageResource(R.drawable.main);
-                }
-            }
-        });
-        seekbar3.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar){}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar){}
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int a = Integer.valueOf(progress);
-                if (a >= 75) {
-                    image3.setImageResource(R.drawable.burn);
-
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            list.add(0,new Integer(seekbar.getProgress()));
-                            list.add(1,new Integer(seekbar2.getProgress()));
-                            list.add(2,new Integer(seekbar3.getProgress()));
-                            list.add(3,new Integer(seekbar4.getProgress()));
-                            alter(list,"캔");
-                        }
-                    };
-                    Timer timer = new Timer();
-                    timer.scheduleAtFixedRate(task,0,1000);
-                }else if(a>=50) {
-                    image3.setImageResource(R.drawable.happy);
-                }
-                else if(a>=25){
-                    image3.setImageResource(R.drawable.change);
-                } else {
-                    image3.setImageResource(R.drawable.main);
-                }
-            }
-        });
-        seekbar4.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar){}
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar){}
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                int a = Integer.valueOf(progress);
-                if (a >= 75) {
-                    image4.setImageResource(R.drawable.burn);
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            list.add(0,new Integer(seekbar.getProgress()));
-                            list.add(1,new Integer(seekbar2.getProgress()));
-                            list.add(2,new Integer(seekbar3.getProgress()));
-                            list.add(3,new Integer(seekbar4.getProgress()));
-                            alter(list,"일반");
-                        }
-                    };
-                    Timer timer = new Timer();
-                    timer.scheduleAtFixedRate(task,0,1000);
-                }else if(a>=50) {
-                    image4.setImageResource(R.drawable.happy);
-                }
-                else if(a>=25){
-                    image4.setImageResource(R.drawable.change);
-                } else {
-                    image4.setImageResource(R.drawable.main);
-                }
-            }
-        });
     }
-    // 알림 함수
-    public void alter(ArrayList name, String val){
-        // builder와 manager선언
-        bui = null;
-        man = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        // 핸드폰 OS버전에 따른 manager체널 개설
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            //버전 오레오 이상일때
-            man.createNotificationChannel(new NotificationChannel(CHANNEL_ID,CHANEL_NAME,NotificationManager.IMPORTANCE_DEFAULT));
-        bui = new NotificationCompat.Builder(this,CHANNEL_ID);
-        }else{
-            //하위버전일때
-            bui = new NotificationCompat.Builder(this);
-        }
-    Intent intent = new Intent(this, MainActivity.class);
-        // intent에 전달할 값 name 삽입
-        intent.putExtra("name",name);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 101,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        // 알림제목
-        bui.setContentTitle("알림");
-        // 알림내용
-        bui.setContentText(val+"의 용량이 75%이상입니다.");
-        // 알림 아이콘(24*24 사이즈)
-        bui.setSmallIcon(R.drawable.ic_launcher_foreground);
-        // 알림 터치시 자동 알림삭제
-        bui.setAutoCancel(true);
-        // 알림창 터치시 Intent가 전달될수 있도록 해줌
-        bui.setContentIntent(pendingIntent);
-        Notification notification = bui.build();
-        // 알림 실행
-        man.notify(1,notification);
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.connect_btn:     // ip 받아오는 버튼
+                connect();
+        }
     }
-    public void changeimage(int a,ImageView image){
-        if (a >= 75) {
-            image.setImageResource(R.drawable.burn);
-        }else if(a>=50) {
-            image.setImageResource(R.drawable.happy);
-        }
-        else if(a>=25){
-            image.setImageResource(R.drawable.change);
-        } else {
-            image.setImageResource(R.drawable.main);
-        }
+
+    // 로그인 정보 db에 넣어주고 연결시켜야 함.
+    void connect(){
+        mHandler = new Handler();
+        Log.w("connect","연결 하는중");
+        // 받아오는거
+        Thread checkUpdate = new Thread() {
+            public void run() {
+                // ip받기
+                String newip = String.valueOf(ip_edit.getText());
+
+                // 서버 접속
+                try {
+                    socket = new Socket(newip, port);
+                    Log.w("서버 접속됨", "서버 접속됨");
+                } catch (IOException e1) {
+                    Log.w("서버접속못함", "서버접속못함");
+                    e1.printStackTrace();
+                }
+
+                Log.w("edit 넘어가야 할 값 : ","안드로이드에서 서버로 연결요청");
+
+                // Buffered가 잘못된듯.
+                try {
+                    dos = new DataOutputStream(socket.getOutputStream());   // output에 보낼꺼 넣음
+                    dis = new DataInputStream(socket.getInputStream());     // input에 받을꺼 넣어짐
+                    dos.writeUTF("안드로이드에서 서버로 연결요청");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.w("버퍼", "버퍼생성 잘못됨");
+                }
+                Log.w("버퍼","버퍼생성 잘됨");
+
+                while(true) {
+                    // 서버에서 받아옴
+                    try {
+                        String line = "";
+                        int line2;
+                        while (true) {
+                            //line = (String) dis.readUTF();
+                            line2 = (int) dis.read();
+                            //Log.w("서버에서 받아온 값 ", "" + line);
+                            //Log.w("서버에서 받아온 값 ", "" + line2);
+
+                            if(line2 > 0) {
+                                Log.w("------서버에서 받아온 값 ", "" + line2);
+                                dos.writeUTF("하나 받았습니다. : " + line2);
+                                dos.flush();
+                            }
+                            if(line2 == 99) {
+                                Log.w("------서버에서 받아온 값 ", "" + line2);
+                                socket.close();
+                                break;
+                            }
+                        }
+                    } catch (Exception e) {
+
+                    }
+                }
+
+            }
+        };
+        // 소켓 접속 시도, 버퍼생성
+        checkUpdate.start();
     }
 }
