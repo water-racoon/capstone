@@ -7,7 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
         import android.view.View;
         import android.widget.Button;
         import android.widget.EditText;
-        import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
         import java.io.BufferedReader;
         import java.io.BufferedWriter;
@@ -20,13 +21,14 @@ import androidx.appcompat.app.AppCompatActivity;
         import java.io.OutputStreamWriter;
         import java.io.PrintWriter;
         import java.net.Socket;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Button connect_btn;                 // ip 받아오는 버튼
 
-    EditText ip_edit;               // ip 에디트
     TextView show_text;             // 서버에서온거 보여주는 에디트
+    ImageView target;
     // 소켓통신에 필요한것
     private String html = "";
     private Handler mHandler;
@@ -39,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DataOutputStream dos;
     private DataInputStream dis;
 
-    private String ip = "192.168.43.95";            // IP 번호
-    private int port = 8081;                          // port 번호
+    private String ip = "192.168.43.153";            // IP 번호
+    private int port = 8080;                          // port 번호
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         connect_btn = (Button)findViewById(R.id.connect_btn);
         connect_btn.setOnClickListener(this);
 
-        ip_edit = (EditText)findViewById(R.id.ip_edit);
         show_text = (TextView)findViewById(R.id.show_text);
+        target = (ImageView)findViewById(R.id.target);
 
     }
 
@@ -70,12 +72,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 받아오는거
         Thread checkUpdate = new Thread() {
             public void run() {
-                // ip받기
-                String newip = String.valueOf(ip_edit.getText());
-
                 // 서버 접속
                 try {
-                    socket = new Socket(newip, port);
+                    socket = new Socket(ip, port);
                     Log.w("서버 접속됨", "서버 접속됨");
                 } catch (IOException e1) {
                     Log.w("서버접속못함", "서버접속못함");
@@ -99,23 +98,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 while(true) {
                     // 서버에서 받아옴
                     try {
-                        String line = "";
-                        int line2;
+                        String line2;
                         while (true) {
                             //line = (String) dis.readUTF();
-                            line2 = (int) dis.read();
-                            //Log.w("서버에서 받아온 값 ", "" + line);
-                            //Log.w("서버에서 받아온 값 ", "" + line2);
+                            line2 = (String) dis.readLine();
+                            String [] part = line2.split(";");
+                            int [] part2 = Arrays.stream(part).mapToInt(Integer::parseInt).toArray();
+                            for (int i = 0; i < 4; i++) {
+                                //Log.w("서버에서 받아온 값 ", "" + line);
+                                //Log.w("서버에서 받아온 값 ", "" + line2);
 
-                            if(line2 > 0) {
-                                Log.w("------서버에서 받아온 값 ", "" + line2);
-                                dos.writeUTF("하나 받았습니다. : " + line2);
-                                dos.flush();
-                            }
-                            if(line2 == 99) {
-                                Log.w("------서버에서 받아온 값 ", "" + line2);
-                                socket.close();
-                                break;
+
+                                if (part2[i] > 20) {
+                                    show_text.setText("25%");
+                                    target.setImageResource(R.drawable.ic_launcher_foreground);
+                                }
+                                if (part2[i] == 99) {
+                                    Log.w("------서버에서 받아온 값 ", "" + line2);
+                                    socket.close();
+                                    break;
+                                }
                             }
                         }
                     } catch (Exception e) {
