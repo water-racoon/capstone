@@ -23,7 +23,7 @@ import android.widget.TextView;
         import java.net.Socket;
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity {
 
     Button connect_btn;                 // ip 받아오는 버튼
 
@@ -41,8 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DataOutputStream dos;
     private DataInputStream dis;
 
-    private String ip = "192.168.43.153";            // IP 번호
-    private int port = 8080;                          // port 번호
+    private String ip = "192.168.43.89";            // IP 번호
+    private int port = 9999;                          // port 번호
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
 
         connect_btn = (Button)findViewById(R.id.connect_btn);
-        connect_btn.setOnClickListener(this);
+        
 
         show_text = (TextView)findViewById(R.id.show_text);
         target = (ImageView)findViewById(R.id.target);
@@ -58,11 +58,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.connect_btn:     // ip 받아오는 버튼
-                connect();
-        }
+    public void onStart() {
+        super.onStart();
+        connect();
     }
 
     // 로그인 정보 db에 넣어주고 연결시켜야 함.
@@ -108,14 +106,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 //Log.w("서버에서 받아온 값 ", "" + line);
                                 //Log.w("서버에서 받아온 값 ", "" + line2);
 
-
-                                if (part2[i] > 20) {
-                                    show_text.setText("25%");
-                                    target.setImageResource(R.drawable.ic_launcher_foreground);
-                                }
-                                if (part2[i] == 99) {
-                                    Log.w("------서버에서 받아온 값 ", "" + line2);
-                                    socket.close();
+                            switch (i){
+                                case 0:  //플라스틱일때
+                                    if(part2[0]>25){  //플라스틱 25%찼을때
+                                        target.setImageResource(R.drawable.ic_launcher_foreground);
+                                    }
+                                    break;
+                                case 1:  //캔일때
+                                    break;
+                                case 2:  //종이일때
+                                    break;
+                                case 3:  //일반일때
                                     break;
                                 }
                             }
