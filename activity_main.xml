@@ -1,97 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    android:padding="15px"
+    tools:context="com.example.test.MainActivity">
 
-    <ImageView
-        android:id="@+id/target2"
-        android:layout_width="125dp"
-        android:layout_height="117dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="44dp"
-        android:src="@drawable/can_empty"
-        android:visibility="visible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.926"
-        app:layout_constraintStart_toEndOf="@+id/target"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/linearLayout">
+        <!--android:layout_centerInParent="true"-->
 
-    <ImageView
-        android:id="@+id/target"
-        android:layout_width="125dp"
-        android:layout_height="117dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="48dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pla_empty" />
+        <ImageView
+            android:id="@+id/target"
+            android:layout_width="111dp"
+            android:layout_height="111dp"
+            android:src="@drawable/pla_empty" />
 
-    <ImageView
-        android:id="@+id/target3"
-        android:layout_width="125dp"
-        android:layout_height="117dp"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/target"
-        app:srcCompat="@drawable/pa_empty" />
+        <ImageView
+            android:id="@+id/target2"
+            android:layout_width="111dp"
+            android:layout_height="111dp"
+            android:src="@drawable/can_empty" />
+        <ImageView
+            android:id="@+id/target3"
+            android:layout_width="111dp"
+            android:layout_height="111dp"
+            android:src="@drawable/pa_empty" />
+        <ImageView
+            android:id="@+id/target4"
+            android:layout_width="111dp"
+            android:layout_height="111dp"
+            android:src="@drawable/tra_empty" />
 
-    <ImageView
-        android:id="@+id/target4"
-        android:layout_width="125dp"
-        android:layout_height="117dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginTop="56dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.926"
-        app:layout_constraintStart_toEndOf="@+id/target3"
-        app:layout_constraintTop_toBottomOf="@+id/target2"
-        app:srcCompat="@drawable/tra_empty" />
+    </LinearLayout>
 
-    <SeekBar
-        android:id="@+id/changer"
-        android:layout_width="330dp"
-        android:layout_height="18dp"
-        android:layout_marginBottom="8dp"
-        android:max="100"
-        android:progress="0"
-        app:layout_constraintBottom_toTopOf="@+id/changer2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SeekBar
-        android:id="@+id/changer2"
-        android:layout_width="330dp"
-        android:layout_height="18dp"
-        android:layout_marginBottom="13dp"
-        android:max="100"
-        android:progress="0"
-        app:layout_constraintBottom_toTopOf="@+id/changer3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SeekBar
-        android:id="@+id/changer3"
-        android:layout_width="330dp"
-        android:layout_height="18dp"
-        android:layout_marginBottom="10dp"
-        android:max="100"
-        android:progress="0"
-        app:layout_constraintBottom_toTopOf="@+id/changer4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <SeekBar
-        android:id="@+id/changer4"
-        android:layout_width="330dp"
-        android:layout_height="18dp"
-        android:layout_marginBottom="16dp"
-        android:max="100"
-        android:progress="0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
