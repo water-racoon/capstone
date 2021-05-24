@@ -25,10 +25,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button connect_btn;                 // ip 받아오는 버튼
-
-    TextView show_text;             // 서버에서온거 보여주는 에디트
-    ImageView target;
+    ImageView target,target2,target3,target4;
     // 소켓통신에 필요한것
     private String html = "";
     private Handler mHandler;
@@ -49,11 +46,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        connect_btn = (Button)findViewById(R.id.connect_btn);
-        
-
-        show_text = (TextView)findViewById(R.id.show_text);
         target = (ImageView)findViewById(R.id.target);
+        target2 = (ImageView)findViewById(R.id.target2);
+        target3 = (ImageView)findViewById(R.id.target3);
+        target4 = (ImageView)findViewById(R.id.target4);
 
     }
 
@@ -108,15 +104,72 @@ public class MainActivity extends AppCompatActivity {
 
                             switch (i){
                                 case 0:  //플라스틱일때
-                                    if(part2[0]>25){  //플라스틱 25%찼을때
-                                        target.setImageResource(R.drawable.ic_launcher_foreground);
+                                    if(part2[0]==100){  //플라스틱 100%찼을때
+                                        target.setImageResource(R.drawable.pla_100);
+                                    }
+                                    else if(part2[0]>75){  //플라스틱 75%찼을때
+                                        target.setImageResource(R.drawable.pla_75);
+                                    }
+                                    else if(part2[0]>50){  //플라스틱 50%찼을때
+                                        target.setImageResource(R.drawable.pla_50);
+                                    }
+                                    else if(part2[0]>25){  //플라스틱 25%찼을때
+                                        target.setImageResource(R.drawable.pla_25);
+                                    }
+                                    else if(part2[0]>=0){  //플라스틱 비었을때
+                                        target.setImageResource(R.drawable.pla_empty);
                                     }
                                     break;
                                 case 1:  //캔일때
+                                    if(part2[1]==100){  //캔 100%찼을때
+                                        target2.setImageResource(R.drawable.can_100);
+                                    }
+                                    else if(part2[1]>75){  //캔 75%찼을때
+                                        target2.setImageResource(R.drawable.can_75);
+                                    }
+                                    else if(part2[1]>50){  //캔 50%찼을때
+                                        target2.setImageResource(R.drawable.can_50);
+                                    }
+                                    else if(part2[1]>25){  //캔 25%찼을때
+                                        target2.setImageResource(R.drawable.can_25);
+                                    }
+                                    else if(part2[1]>=0){  //캔 비었을때
+                                        target2.setImageResource(R.drawable.can_empty);
+                                    }
                                     break;
                                 case 2:  //종이일때
+                                     if(part2[2]==100){  //종이 100%찼을때
+                                        target3.setImageResource(R.drawable.pa_100);
+                                    }
+                                    else if(part2[2]<75){  //종이 75%찼을때
+                                        target3.setImageResource(R.drawable.pa_75);
+                                    }
+                                    else if(part2[2]>50){  //종이 50%찼을때
+                                        target3.setImageResource(R.drawable.pa_50);
+                                    }
+                                    else if(part2[2]>25){  //종이 25%찼을때
+                                        target3.setImageResource(R.drawable.pa_25);
+                                    }
+                                    else if(part2[2]>=0){  //종이 비었을때
+                                        target3.setImageResource(R.drawable.pa_empty);
+                                    }
                                     break;
                                 case 3:  //일반일때
+                                    if(part2[3]==100){  //일반 100%찼을때
+                                        target4.setImageResource(R.drawable.tra_100);
+                                    }
+                                    else if(part2[3]>75) {  //일반 75%찼을때
+                                        target4.setImageResource(R.drawable.tra_75);
+                                    }
+                                    else if(part2[3]>50){  //일반 50%찼을때
+                                        target4.setImageResource(R.drawable.tra_50);
+                                    }
+                                    else if(part2[3]>25){  //일반 25%찼을때
+                                        target4.setImageResource(R.drawable.tra_25);
+                                    }
+                                    else if(part2[3]>=0){  //일반 비었을때
+                                    target4.setImageResource(R.drawable.tra_empty);
+                                }
                                     break;
                                 }
                             }
