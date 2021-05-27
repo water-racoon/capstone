@@ -1,42 +1,130 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15px"
-    tools:context="com.example.test.MainActivity">
-
-    <LinearLayout
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:id="@+id/linearLayout">
-        <!--android:layout_centerInParent="true"-->
+        android:padding="15px"
+        tools:context="com.example.test.MainActivity">
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/target"
-            android:layout_width="111dp"
-            android:layout_height="111dp"
-            android:src="@drawable/pla_empty" />
+     <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/target2"
-            android:layout_width="111dp"
-            android:layout_height="111dp"
-            android:src="@drawable/can_empty" />
+         <ProgressBar
+             android:id="@+id/progressBar2"
+             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:max="100"
+             android:progressTint="#ff0000"
+             android:backgroundTint="#ffeec8"
+             android:scaleY="50"/>
+         <ImageView
+             android:id="@+id/target"
+             android:layout_width="144dp"
+             android:layout_height="wrap_content"
+             android:src="@drawable/pla_empty"
+             android:layout_gravity="left"/>
+         <TextView
+             android:id="@+id/text1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textSize="60sp"
+             android:textColor="#000000"
+             android:text="0%" />
+     </FrameLayout>
+     <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:orientation="vertical">
+         <ProgressBar
+             android:id="@+id/progressBar3"
+             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+             android:backgroundTint="#ffeec8"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:max="100"
+             android:progressTint="#00ff00"
+             android:scaleY="50"/>
+         <ImageView
+        android:id="@+id/target2"
+        android:layout_width="144dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/can_empty" />
+         <TextView
+             android:id="@+id/text2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textSize="60sp"
+             android:textColor="#000000"
+             android:text="0%" />
+     </FrameLayout>
+     <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:orientation="vertical">
+         <ProgressBar
+             android:id="@+id/progressBar4"
+             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:progressTint="#fc88fc"
+             android:backgroundTint="#ffeec8"
+             android:max="100"
+             android:scaleY="50"/> />
         <ImageView
             android:id="@+id/target3"
-            android:layout_width="111dp"
-            android:layout_height="111dp"
+            android:layout_width="144dp"
+            android:layout_height="wrap_content"
             android:src="@drawable/pa_empty" />
-        <ImageView
-            android:id="@+id/target4"
-            android:layout_width="111dp"
-            android:layout_height="111dp"
-            android:src="@drawable/tra_empty" />
+         <TextView
+             android:id="@+id/text3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textSize="60sp"
+             android:textColor="#000000"
+             android:text="0%" />
+     </FrameLayout>
+     <FrameLayout
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1">
 
-    </LinearLayout>
-
-</RelativeLayout>
+         <ProgressBar
+             android:id="@+id/progressBar5"
+             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:backgroundTint="#ffeec8"
+             android:max="100"
+             android:progressTint="#2646fc"
+             android:scaleY="50"/> />
+         <ImageView
+             android:id="@+id/target4"
+             android:layout_width="144dp"
+             android:layout_height="wrap_content"
+             android:src="@drawable/tra_empty"
+             />
+         <TextView
+             android:id="@+id/text4"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:textSize="60sp"
+             android:textColor="#000000"
+             android:text="0%" />
+     </FrameLayout>
+     </LinearLayout>
+ </RelativeLayout>
