@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
         import android.widget.Button;
         import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
         import java.io.BufferedReader;
@@ -26,6 +27,8 @@ import java.util.Arrays;
 public class MainActivity extends AppCompatActivity {
 
     ImageView target,target2,target3,target4;
+    ProgressBar progress,progress2,progress3,progress4;
+    TextView text,text2,text3,text4;
     // 소켓통신에 필요한것
     private String html = "";
     private Handler mHandler;
@@ -50,7 +53,18 @@ public class MainActivity extends AppCompatActivity {
         target2 = (ImageView)findViewById(R.id.target2);
         target3 = (ImageView)findViewById(R.id.target3);
         target4 = (ImageView)findViewById(R.id.target4);
-
+        progress = (ProgressBar) findViewById(R.id.progressBar2);
+        progress2 = (ProgressBar)findViewById(R.id.progressBar3);
+        progress3 = (ProgressBar)findViewById(R.id.progressBar4);
+        progress4 = (ProgressBar)findViewById(R.id.progressBar5);
+        text = (TextView)findViewById(R.id.text1);
+        text2 = (TextView)findViewById(R.id.text2);
+        text3 = (TextView)findViewById(R.id.text3);
+        text4 = (TextView)findViewById(R.id.text4);
+        text.setText(progress.getProgress()+"%");
+        text2.setText(progress2.getProgress()+"%");
+        text3.setText(progress3.getProgress()+"%");
+        text4.setText(progress4.getProgress()+"%");
     }
 
     @Override
@@ -104,72 +118,20 @@ public class MainActivity extends AppCompatActivity {
 
                             switch (i){
                                 case 0:  //플라스틱일때
-                                    if(part2[0]==100){  //플라스틱 100%찼을때
-                                        target.setImageResource(R.drawable.pla_100);
-                                    }
-                                    else if(part2[0]>75){  //플라스틱 75%찼을때
-                                        target.setImageResource(R.drawable.pla_75);
-                                    }
-                                    else if(part2[0]>50){  //플라스틱 50%찼을때
-                                        target.setImageResource(R.drawable.pla_50);
-                                    }
-                                    else if(part2[0]>25){  //플라스틱 25%찼을때
-                                        target.setImageResource(R.drawable.pla_25);
-                                    }
-                                    else if(part2[0]>=0){  //플라스틱 비었을때
-                                        target.setImageResource(R.drawable.pla_empty);
-                                    }
+                                    progress.setProgress(part2[0]);
+                                    text.setText(part2[0]+"%");
                                     break;
                                 case 1:  //캔일때
-                                    if(part2[1]==100){  //캔 100%찼을때
-                                        target2.setImageResource(R.drawable.can_100);
-                                    }
-                                    else if(part2[1]>75){  //캔 75%찼을때
-                                        target2.setImageResource(R.drawable.can_75);
-                                    }
-                                    else if(part2[1]>50){  //캔 50%찼을때
-                                        target2.setImageResource(R.drawable.can_50);
-                                    }
-                                    else if(part2[1]>25){  //캔 25%찼을때
-                                        target2.setImageResource(R.drawable.can_25);
-                                    }
-                                    else if(part2[1]>=0){  //캔 비었을때
-                                        target2.setImageResource(R.drawable.can_empty);
-                                    }
+                                    progress2.setProgress(part2[1]);
+                                    text2.setText(part2[1]+"%");
                                     break;
                                 case 2:  //종이일때
-                                     if(part2[2]==100){  //종이 100%찼을때
-                                        target3.setImageResource(R.drawable.pa_100);
-                                    }
-                                    else if(part2[2]<75){  //종이 75%찼을때
-                                        target3.setImageResource(R.drawable.pa_75);
-                                    }
-                                    else if(part2[2]>50){  //종이 50%찼을때
-                                        target3.setImageResource(R.drawable.pa_50);
-                                    }
-                                    else if(part2[2]>25){  //종이 25%찼을때
-                                        target3.setImageResource(R.drawable.pa_25);
-                                    }
-                                    else if(part2[2]>=0){  //종이 비었을때
-                                        target3.setImageResource(R.drawable.pa_empty);
-                                    }
+                                    progress3.setProgress(part2[2]);
+                                    text3.setText(part2[2]+"%");
                                     break;
                                 case 3:  //일반일때
-                                    if(part2[3]==100){  //일반 100%찼을때
-                                        target4.setImageResource(R.drawable.tra_100);
-                                    }
-                                    else if(part2[3]>75) {  //일반 75%찼을때
-                                        target4.setImageResource(R.drawable.tra_75);
-                                    }
-                                    else if(part2[3]>50){  //일반 50%찼을때
-                                        target4.setImageResource(R.drawable.tra_50);
-                                    }
-                                    else if(part2[3]>25){  //일반 25%찼을때
-                                        target4.setImageResource(R.drawable.tra_25);
-                                    }
-                                    else if(part2[3]>=0){  //일반 비었을때
-                                    target4.setImageResource(R.drawable.tra_empty);
-                                }
+                                    progress4.setProgress(part2[3]);
+                                    text4.setText(part2[3]+"%");
                                     break;
                                 }
                             }
