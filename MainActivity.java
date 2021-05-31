@@ -23,6 +23,7 @@ import android.widget.TextView;
         import java.io.PrintWriter;
         import java.net.Socket;
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private DataOutputStream dos;
     private DataInputStream dis;
 
-    private String ip = "192.168.43.89";            // IP 번호
-    private int port = 9999;                          // port 번호
+    private String ip = "192.168.43.147";            // IP 번호
+    private int port = 8080;                          // port 번호
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,28 +111,29 @@ public class MainActivity extends AppCompatActivity {
                         while (true) {
                             //line = (String) dis.readUTF();
                             line2 = (String) dis.readLine();
+                            Log.w("날라온 값",line2);
+                            Log.w("데이터 타입",line2.getClass().getName());
                             String [] part = line2.split(";");
-                            int [] part2 = Arrays.stream(part).mapToInt(Integer::parseInt).toArray();
-                            for (int i = 0; i < 4; i++) {
+                            Log.w("1항",part[0]);
+                            for (int i = 0; i < part.length; i++) {
                                 //Log.w("서버에서 받아온 값 ", "" + line);
                                 //Log.w("서버에서 받아온 값 ", "" + line2);
-
                             switch (i){
                                 case 0:  //플라스틱일때
-                                    progress.setProgress(part2[0]);
-                                    text.setText(part2[0]+"%");
+                                    progress.setProgress(Integer.parseInt(part[0]));
+                                    text.setText(part[0]+"%");
                                     break;
                                 case 1:  //캔일때
-                                    progress2.setProgress(part2[1]);
-                                    text2.setText(part2[1]+"%");
+                                    progress2.setProgress(Integer.parseInt(part[1]));
+                                    text2.setText(part[1]+"%");
                                     break;
                                 case 2:  //종이일때
-                                    progress3.setProgress(part2[2]);
-                                    text3.setText(part2[2]+"%");
+                                    progress3.setProgress(Integer.parseInt(part[2]));
+                                    text3.setText(part[2]+"%");
                                     break;
                                 case 3:  //일반일때
-                                    progress4.setProgress(part2[3]);
-                                    text4.setText(part2[3]+"%");
+                                    progress4.setProgress(Integer.parseInt(part[3]));
+                                    text4.setText(part[3]+"%");
                                     break;
                                 }
                             }
